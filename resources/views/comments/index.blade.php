@@ -16,7 +16,7 @@
             <span class="avatar"><img src="images/users/{{$user->id}}.jpg" alt=""/></span>
             <h1>{{$user->name}}</h1>
             @foreach($user->comments as $comment)
-                <p>{{$comment}}</p>
+                <p>{{"{$comment->created_at->format('j F, Y')}: {$comment->value}"}}</p>
             @endforeach
         </header>
 

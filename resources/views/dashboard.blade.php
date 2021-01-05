@@ -12,8 +12,8 @@
                     You're logged in!
                 </div>
             </div>
-            @foreach(auth()->user()->comments as $comment)
-                <p>{{$comment}}</p>
+            @foreach($user->comments as $comment)
+                <p>{{"{$comment->created_at->format('j F, Y')}: {$comment->value}"}}</p>
             @endforeach
 
             <div>
@@ -25,7 +25,7 @@
                     </div>
                     <div>
                         <label for="id">User Id</label>
-                        <input id="id" type="number" name="id" placeholder="Enter User ID here" required>
+                        <input id="id" type="number" name="id" placeholder="Enter User ID here" required min="1">
                     </div>
                     <div>
                         <label for="password">Password</label>
