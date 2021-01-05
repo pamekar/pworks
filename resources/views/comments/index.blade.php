@@ -24,19 +24,21 @@
             <form action="{{route('comments.store')}}" method="post">
                 @csrf
                 <div>
-                    <label for="comment"></label>
-                    <textarea id="comment" name="comment" required></textarea>
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="comment" placeholder="Enter comment here" required></textarea>
                 </div>
                 <div>
-                    <label for="id"></label>
-                    <input id="id" type="number" name="id" required>
+                    <label for="id">User Id</label>
+                    <input id="id" type="number" name="id" placeholder="Enter User ID here" value="{{$user->id}}"
+                           min="1"
+                           required>
                 </div>
                 <div>
-                    <label for="password"></label>
-                    <input id="password" type="password" name="password" required>
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password" placeholder="Enter Password here" required>
                 </div>
                 <div>
-                    <button type="submit">Submit</button>
+                    <input type="submit" value="Submit"/>
                 </div>
             </form>
         </div>
