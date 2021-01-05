@@ -10,6 +10,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = ['value'];
+    protected $touches = ['user'];
 
     public function user()
     {
