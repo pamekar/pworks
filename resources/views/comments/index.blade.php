@@ -13,7 +13,7 @@
 <div id="wrapper">
     <section id="main">
         <header>
-            <span class="avatar"><img src="images/users/{{$user->id}}.jpg" alt=""/></span>
+            <span class="avatar"><img src="{{asset("images/users/".mt_rand(1,2).".jpg")}}" alt=""/></span>
             <h1>{{$user->name}}</h1>
             @foreach($user->comments as $comment)
                 <p>{{"{$comment->created_at->format('j F, Y')}: {$comment->value}"}}</p>
