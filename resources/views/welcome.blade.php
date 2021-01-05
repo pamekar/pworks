@@ -4,8 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
-
+    <title>{{config('app.name')}}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}"/>
+    <noscript>
+        <link rel="stylesheet" href="{{asset('assets/css/noscript.css')}}"/>
+    </noscript>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
@@ -63,27 +68,26 @@
         }
     </style>
 </head>
-<body>
-<div class="flex-center position-ref full-height">
-    @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-                <a href="{{ url('/dashboard') }}">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
 
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}">Register</a>
-                @endif
-            @endauth
+<body class="is-preload">
+<div id="wrapper">
+    <section id="main" style="width:100%">
 
-        </div>
-    @endif
+        @if (Route::has('login'))
+            <div class="top-right links">
+                @auth
+                    <a href="{{ url('/dashboard') }}">Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}">Login</a>
 
-    <div class="content">
-        <div class="title m-b-md">
-            InboxPolice
-        </div>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}">Register</a>
+                    @endif
+                @endauth
+
+            </div>
+        @endif
+
         <div>
             <table class="table">
                 <thead>
@@ -100,13 +104,29 @@
                         <td>{{$user->id}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
-                        <td><a href="{{route('comments.show',['comment'=>$user->id])}}">View Comments</a></td>
+                        <td><a href="{{route('comments.show',['comment'=>$user->id])}}">View Comments
+                                ({{$user->comments->count()}})</a></td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
+
+    </section>
+    <footer id="footer">
+        <ul class="copyright">
+            <li>&copy; Pictureworks</li>
+        </ul>
+    </footer>
+
 </div>
+<script>
+    if ('addEventListener' in window) {
+        window.addEventListener('load', function () {
+            document.body.className = document.body.className.replace(/\bis-preload\b/, '');
+        });
+        document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+    }
+</script>
 </body>
 </html>
