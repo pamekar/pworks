@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\CommentsManager;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class CommentsController extends Controller
 {
+    use CommentsManager;
+
     /**
      * Display a listing of the resource.
      *
@@ -19,17 +21,17 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        return view('welcome', ['users' => \App\Models\User::all()]);
+        return view('welcome', ['users' => \App\Models\User::orderBy('id')->get()]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
     public function create()
     {
-
+        return view('comments.create');
     }
 
     /**
@@ -47,8 +49,7 @@ class CommentsController extends Controller
         ]);
 
         if ($request->get('password') === '720DF6C2482218518FA20FDC52D4DED7ECC043AB') {
-            $user = User::findorFail($request->get('id'));
-            $user->comments()->create(['value' => $request->get('comment')]);
+            $user = $this->storeComment($request->get('id'), $request->get('comment'));
 
             return redirect()->route('comments.show', ['comment' => $user->id]);
         }
@@ -66,39 +67,5 @@ class CommentsController extends Controller
         $user = User::findOrFail($id);
 
         return view('comments.index', ['user' => $user]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
