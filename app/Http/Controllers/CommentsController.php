@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -34,12 +35,24 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required|integer|min:1',
+            'password' => 'required|string|max:255',
+            'comment' => 'required|string'
+        ]);
+
+        if ($request->get('password') === '720DF6C2482218518FA20FDC52D4DED7ECC043AB') {
+            $user = User::findorFail($request->get('id'));
+            $user->comments()->create(['value' => $request->get('comment')]);
+
+            return redirect()->route('comments.show', ['comment' => $user->id]);
+        }
+        abort(401);
     }
 
     /**
@@ -69,7 +82,7 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
      * @return Response
      */
