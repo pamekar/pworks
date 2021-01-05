@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CommentsController extends Controller
 {
@@ -13,7 +18,7 @@ class CommentsController extends Controller
      */
     public function index()
     {
-
+        return view('welcome', ['users' => \App\Models\User::all()]);
     }
 
     /**
