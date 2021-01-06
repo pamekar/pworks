@@ -15,7 +15,7 @@ class CommentsController extends Controller
     use CommentsManager;
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
      *
      * @return Application|Factory|View
      */
@@ -25,7 +25,7 @@ class CommentsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new comment.
      *
      * @return Application|Factory|View
      */
@@ -35,7 +35,16 @@ class CommentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created comment in storage.
+     *
+     * <p>Request Payload</p>
+     * <pre>
+     * [
+     *      'id' => 'required|integer|min:1',
+     *      'password' => 'required|string|max:255',
+     *      'comment' => 'required|string'
+     * ]
+     * </pre
      *
      * @param Request $request
      * @return RedirectResponse
@@ -57,7 +66,7 @@ class CommentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified users comments.
      *
      * @param int $id
      * @return Application|Factory|View
