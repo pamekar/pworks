@@ -2,8 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Illuminate\Support\Str;
 
 class Handler extends ExceptionHandler
 {
@@ -33,8 +34,11 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (ModelNotFoundException $e, $request) {
+            $message = "Oops! We couldn't find the specified " .
+                Str::ucfirst(str_replace('_', ' ', Str::snake(substr($e->getModel(), strrpos($e->getModel(), '\\') + 1))));
+            $exception = new \HttpException(404, $message);
+            return parent::render($request, $exception);
         });
     }
 }
