@@ -50,3 +50,4 @@ routes implemented, params, and what they do can be found here https://documente
 ### Note
 - You can also register new users and login with the /register and /login routes.
 - The default password for all users is `password`
+- 08:23:06 total time logged for this project
